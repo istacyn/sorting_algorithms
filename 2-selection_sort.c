@@ -7,7 +7,9 @@
  */
 void swap(int *x, int *y)
 {
-	int temp = *x;
+	int temp;
+
+	temp = *x;
 	*x = *y;
 	*y = temp;
 }
@@ -20,24 +22,21 @@ void swap(int *x, int *y)
  */
 void selection_sort(int *array, size_t size)
 {
-	size_t i, j, min_idx;
+	int *min_idx;
+	size_t i, j;
 
-	if (array ==NULL || size < 2)
+	if (array == NULL || size < 2)
 		return;
 
 	for (i = 0; i < size - 1; i++)
 	{
-		min_idx = 1;
+		min_idx = array + i;
 		for (j = i + 1; j < size; j++)
+			min_idx = (array[j] < *min_idx) ? (array + j) : min_idx;
+
+		if ((array + i) != min_idx)
 		{
-			if (array[j] < array[min_idx])
-			{
-				min_idx = j;
-			}
-		}
-		if (min_idx != i)
-		{
-			swap(&array[i], &array[min_idx]);
+			swap(array + i, min_idx);
 			print_array(array, size);
 		}
 	}
