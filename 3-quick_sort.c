@@ -8,7 +8,8 @@
 void swap(int *x, int *y)
 {
 	int temp;
-       	temp = *x;
+
+	temp = *x;
 	*x = *y;
 	*y = temp;
 }
@@ -24,27 +25,29 @@ void swap(int *x, int *y)
  */
 int partition(int *array, int start, int end, size_t size)
 {
-	int pivot = array[end], i = start - 1, j, temp;
+	int *pivot, i, j;
 
-	for (j = start; j <= end - 1; j++)
+	pivot = array + end;
+	for (i = j = start; j < end; j++)
 	{
-		if (array[j] < pivot)
+		if (array[j] < *pivot)
 		{
-			i++;
-			temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-			if (i != j)
+			if (i < j)
+			{
+				swap(array + j, array + i);
 				print_array(array, size);
+			}
+			i++;
 		}
 	}
-	temp = array[i + 1];
-	array[i + 1] = array[end];
-	array[end] = temp;
-	if (i + 1 != end)
-		print_array(array, size);
 
-	return (i + 1);
+	if (array[i] > *pivot)
+	{
+		swap(array + i, pivot);
+		print_array(array, size);
+	}
+
+	return (i);
 }
 
 /**
